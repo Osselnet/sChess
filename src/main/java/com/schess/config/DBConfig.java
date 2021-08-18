@@ -16,10 +16,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.schess.repositories")
-@PropertySource("persistence-h2.properties")
-// @PropertySource("persistence-hsqldb.properties")
-// @PropertySource("persistence-derby.properties")
-// @PropertySource("persistence-sqlite.properties")
+@PropertySource("persistence.properties")
 
 public class DBConfig {
     @Autowired
@@ -39,7 +36,7 @@ public class DBConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "com.baeldung.books.models" });
+        em.setPackagesToScan(new String[] { "com.schess.models" });
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(additionalProperties());
         return em;
@@ -59,24 +56,6 @@ public class DBConfig {
         return hibernateProperties;
     }
 
-}
-
-@Configuration
-@Profile("h2")
-@PropertySource("classpath:persistence-h2.properties")
-class H2Config {
-}
-
-@Configuration
-@Profile("hsqldb")
-@PropertySource("classpath:persistence-hsqldb.properties")
-class HsqldbConfig {
-}
-
-@Configuration
-@Profile("derby")
-@PropertySource("classpath:persistence-derby.properties")
-class DerbyConfig {
 }
 
 @Configuration
