@@ -1,7 +1,7 @@
 package com.schess.components;
 
 import com.schess.models.User;
-import com.schess.repositories.UserRepository;
+import com.schess.service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.button.Button;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @UIScope
 public class UserEditor extends VerticalLayout implements KeyNotifier {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     private User user;
 
@@ -41,8 +41,8 @@ public class UserEditor extends VerticalLayout implements KeyNotifier {
     }
 
     @Autowired
-    public UserEditor(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserEditor(UserService userService) {
+        this.userService = userService;
 
         add(name, email, actions);
         binder.bindInstanceFields(this);
@@ -61,12 +61,12 @@ public class UserEditor extends VerticalLayout implements KeyNotifier {
     }
 
     private void delete() {
-        userRepository.delete(user);
+        userService.delete(user);
         changeHandler.onChange();
     }
 
     private void save() {
-        userRepository.save(user);
+        userService.save(user);
         changeHandler.onChange();
     }
 
@@ -76,7 +76,7 @@ public class UserEditor extends VerticalLayout implements KeyNotifier {
             return;
         }
         if (newUser.getId() != 0) {
-            user = userRepository.findById(newUser.getId()).orElse(newUser);
+            user = userService.findById(newUser.getId()).orElse(newUser);
         } else {
             user = newUser;
         }

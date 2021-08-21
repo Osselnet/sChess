@@ -3,6 +3,7 @@ package com.schess.view;
 import com.schess.components.UserEditor;
 import com.schess.models.User;
 import com.schess.repositories.UserRepository;
+import com.schess.service.UserService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -12,11 +13,11 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route
+@Route("")
 public class UserView extends VerticalLayout {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    private Grid<UserRepository> grid = new Grid<>(UserRepository.class);
+    private Grid<User> grid = new Grid<>(User.class);
 
     private final TextField filter = new TextField("", "Type to filter");
     private final Button addNewButton = new Button("Add new");
@@ -25,8 +26,8 @@ public class UserView extends VerticalLayout {
     private final HorizontalLayout toolbar = new HorizontalLayout(filter, addNewButton);
 
     @Autowired
-    public UserView(UserRepository userRepository, UserEditor editor) {
-        this.userRepository = userRepository;
+    public UserView(UserService userService, UserEditor editor) {
+        this.userService = userService;
         this.editor = editor;
         add(toolbar, grid, this.editor);
 
@@ -42,14 +43,14 @@ public class UserView extends VerticalLayout {
             showUsers(filter.getValue());
         });
 
-        showUsers("userRepository");
+        showUsers("Oleg");
     }
 
     private void showUsers(String name) {
         if (name.isEmpty()) {
-            grid.setItems((UserRepository) userRepository.findAll());
+            grid.setItems(userService.findAll());
         } else {
-            grid.setItems((UserRepository) userRepository.findByName(name));
+            grid.setItems(userService.findByName(name));
         }
     }
 }

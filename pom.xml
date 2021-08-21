@@ -17,7 +17,7 @@
         <java.version>11</java.version>
         <repackage.classifier/>
         <spring-native.version>0.10.2</spring-native.version>
-        <vaadin.version>20.0.6</vaadin.version>
+        <vaadin.version>14.6.8</vaadin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -45,6 +45,17 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.36.0.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.vaadin/vaadin-maven-plugin -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-maven-plugin</artifactId>
+            <version>14.6.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
