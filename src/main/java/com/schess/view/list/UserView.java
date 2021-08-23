@@ -1,23 +1,25 @@
-package com.schess.view;
+package com.schess.view.list;
 
 import com.schess.components.UserEditor;
-import com.schess.models.User;
-import com.schess.repositories.UserRepository;
+import com.schess.models.Users;
 import com.schess.service.UserService;
+import com.schess.view.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route("")
+@Route(value="", layout = MainLayout.class)
+@PageTitle("Users | SChess")
 public class UserView extends VerticalLayout {
     private final UserService userService;
 
-    private Grid<User> grid = new Grid<>(User.class);
+    private Grid<Users> grid = new Grid<>(Users.class);
 
     private final TextField filter = new TextField("", "Type to filter");
     private final Button addNewButton = new Button("Add new");
@@ -29,21 +31,22 @@ public class UserView extends VerticalLayout {
     public UserView(UserService userService, UserEditor editor) {
         this.userService = userService;
         this.editor = editor;
+        configureGrid();
         add(toolbar, grid, this.editor);
 
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(e -> showUsers(e.getValue()));
 
-        grid.asSingleSelect().addValueChangeListener(e -> editor.editUser((User) e.getValue()));
+        grid.asSingleSelect().addValueChangeListener(e -> editor.editUser((Users) e.getValue()));
 
-        addNewButton.addClickListener(e -> editor.editUser(new User()));
+        addNewButton.addClickListener(e -> editor.editUser(new Users()));
 
         editor.setChangeHandler(() -> {
             editor.setVisible(false);
             showUsers(filter.getValue());
         });
 
-        showUsers("Oleg");
+        showUsers("user");
     }
 
     private void showUsers(String name) {
@@ -52,5 +55,10 @@ public class UserView extends VerticalLayout {
         } else {
             grid.setItems(userService.findByName(name));
         }
+    }
+
+    private void configureGrid() {
+        grid.setSizeFull();
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 }

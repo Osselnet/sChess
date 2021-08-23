@@ -1,6 +1,6 @@
 package com.schess.components;
 
-import com.schess.models.User;
+import com.schess.models.Users;
 import com.schess.service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
@@ -21,7 +21,7 @@ public class UserEditor extends VerticalLayout implements KeyNotifier {
 
     private final UserService userService;
 
-    private User user;
+    private Users users;
 
     private TextField name = new TextField("Name");
     private TextField email = new TextField("email");
@@ -32,7 +32,7 @@ public class UserEditor extends VerticalLayout implements KeyNotifier {
 
     private HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
 
-    private Binder<User> binder = new Binder<>(User.class);
+    private Binder<Users> binder = new Binder<>(Users.class);
     @Setter
     private ChangeHandler changeHandler;
 
@@ -56,31 +56,31 @@ public class UserEditor extends VerticalLayout implements KeyNotifier {
 
         save.addClickListener(e -> save());
         delete.addClickListener(e -> delete());
-        cancel.addClickListener(e -> editUser(user));
+        cancel.addClickListener(e -> editUser(users));
         setVisible(false);
     }
 
     private void delete() {
-        userService.delete(user);
+        userService.delete(users);
         changeHandler.onChange();
     }
 
     private void save() {
-        userService.save(user);
+        userService.save(users);
         changeHandler.onChange();
     }
 
-    public void editUser(User newUser) {
+    public void editUser(Users newUser) {
         if (newUser == null) {
             setVisible(false);
             return;
         }
         if (newUser.getId() != 0) {
-            user = userService.findById(newUser.getId()).orElse(newUser);
+            users = userService.findById(newUser.getId()).orElse(newUser);
         } else {
-            user = newUser;
+            users = newUser;
         }
-        binder.setBean(user);
+        binder.setBean(users);
 
         setVisible(true);
 
