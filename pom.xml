@@ -12,7 +12,8 @@
     <artifactId>schess</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>schess</name>
-    <description>Demo project for Spring Boot</description>
+    <description>My chess project</description>
+    <packaging>jar</packaging>
     <properties>
         <java.version>11</java.version>
         <repackage.classifier/>
@@ -50,10 +51,6 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-maven-plugin</artifactId>
             <version>14.6.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -102,6 +99,9 @@
                         <groupId>com.vaadin</groupId>
                         <artifactId>vaadin-maven-plugin</artifactId>
                         <version>${vaadin.version}</version>
+                        <configuration>
+                            <pnpmEnable>true</pnpmEnable>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>frontend</id>
@@ -110,9 +110,6 @@
                                     <goal>prepare-frontend</goal>
                                     <goal>build-frontend</goal>
                                 </goals>
-                                <configuration>
-                                    <productionMode>true</productionMode>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
