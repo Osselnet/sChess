@@ -24,17 +24,17 @@ public class MainLayout extends AppLayout {
 
         HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo);
 
+        header.addClassName("header");
         header.setDefaultVerticalComponentAlignment(
                 FlexComponent.Alignment.CENTER);
         header.setWidth("100%");
-        header.addClassName("header");
-
+        header.expand(logo);
 
         addToNavbar(header);
     }
 
     private void createDrawer() {
-        RouterLink listLink = new RouterLink("list", UserView.class);
+        RouterLink listLink = new RouterLink("List", UserView.class);
         listLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(listLink));

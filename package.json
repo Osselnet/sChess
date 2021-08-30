@@ -52,7 +52,7 @@
     "raw-loader": "3.1.0",
     "ts-loader": "8.0.12",
     "typescript": "4.0.3",
-    "webpack": "4.42.0",
+    "webpack": "^4.42.0",
     "webpack-babel-multi-target-plugin": "2.3.3",
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "3.11.0",
@@ -120,6 +120,6 @@
       "webpack-dev-server": "3.11.0",
       "webpack-merge": "4.2.2"
     },
-    "hash": "1a498d940175239e479156d12cb11db44bbdbd2de80e31eeb7e2a17c9167e945"
+    "hash": "bafc0465a34af81a7546b9aa81f58ce99bf2db0a4eef889d96b1198a4cb06ddb"
   }
 }

@@ -17,8 +17,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<Users> findAll() {
-        return userRepository.findAll();
+    public List<Users> findAll(String stringFilter) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
+            return userRepository.findAll();
+        } else {
+            return (List<Users>) userRepository.findByName(stringFilter);
+        }
     }
 
     public Users findByName(String name) {
