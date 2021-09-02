@@ -33,4 +33,7 @@ a[highlight] {
     .list-view.editing .contact-grid {
         display: none;
     }
+    .v-reconnect-dialog {
+        display: none !important;
+    }
 }

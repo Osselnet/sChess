@@ -26,10 +26,8 @@ public class UserView extends VerticalLayout {
     private Grid<Users> grid = new Grid<>(Users.class);
 
     private final TextField filter = new TextField("", "Type to filter");
-    //private final Button addNewButton = new Button("Add new");
     private UserForm form;
 
-    @Autowired
     public UserView(UserService userService) {
         this.userService = userService;
 
@@ -38,26 +36,26 @@ public class UserView extends VerticalLayout {
         configureGrid();
 
         form = new UserForm();
-        form.addListener(UserForm.SaveEvent.class, this::saveContact);
-        form.addListener(UserForm.DeleteEvent.class, this::deleteContact);
+        form.addListener(UserForm.SaveEvent.class, this::saveUser);
+        form.addListener(UserForm.DeleteEvent.class, this::deleteUser);
         form.addListener(UserForm.CloseEvent.class, e -> closeEditor());
 
         Div content = new Div(grid, form);
         content.addClassName("content");
         content.setSizeFull();
 
-        add(filter, content);
+        add(getToolBar(), content);
         updateList();
         closeEditor();
     }
 
-    private void deleteContact(UserForm.DeleteEvent evt) {
+    private void deleteUser(UserForm.DeleteEvent evt) {
         userService.delete(evt.getUser());
         updateList();
         closeEditor();
     }
 
-    private void saveContact(UserForm.SaveEvent evt) {
+    private void saveUser(UserForm.SaveEvent evt) {
         userService.save(evt.getUser());
         updateList();
         closeEditor();
@@ -69,14 +67,14 @@ public class UserView extends VerticalLayout {
         filter.setValueChangeMode(ValueChangeMode.LAZY);
         filter.addValueChangeListener(e -> updateList());
 
-        Button addContactButton = new Button("Add contact", click -> addContact());
+        Button addUserButton = new Button("Add new", click -> addUser());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filter, addContactButton);
+        HorizontalLayout toolbar = new HorizontalLayout(filter, addUserButton);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
 
-    private void addContact() {
+    private void addUser() {
         grid.asSingleSelect().clear();
         editUser(new Users());
     }
