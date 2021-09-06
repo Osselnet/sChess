@@ -42,7 +42,7 @@ public class MainLayout extends AppLayout {
     @Autowired
     private AuthService authService;
 
-    public MainLayout() {
+    public MainLayout(AuthService authService) {
         this.authService = authService;
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeader());

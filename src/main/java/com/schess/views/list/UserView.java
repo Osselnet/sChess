@@ -1,7 +1,6 @@
 package com.schess.views.list;
 
 import com.schess.models.User;
-import com.schess.service.UserService;
 import com.schess.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
