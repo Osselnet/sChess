@@ -1,6 +1,6 @@
 package com.schess.security;
 
-import com.schess.view.login.LoginView;
+import com.schess.views.login.LoginView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;

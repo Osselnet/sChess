@@ -1,6 +1,6 @@
-package com.schess.view.list;
+package com.schess.views.list;
 
-import com.schess.models.Users;
+import com.schess.models.User;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -11,13 +11,10 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
 public class UserForm extends FormLayout {
-    private Users users;
+    private User users;
 
     private TextField name = new TextField("Name");
     private EmailField email = new EmailField("email");
@@ -34,7 +31,7 @@ public class UserForm extends FormLayout {
         add(name, email, actions());
     }
 
-    public void setUser(Users users) {
+    public void setUser(User users) {
         this.users = users;
         //binder.readBean(users);
     }
@@ -67,26 +64,26 @@ public class UserForm extends FormLayout {
 
     // Events
     public static abstract class UserFormEvent extends ComponentEvent<UserForm> {
-        private Users users;
+        private User users;
 
-        protected UserFormEvent(UserForm source, Users users) {
+        protected UserFormEvent(UserForm source, User users) {
             super(source, false);
             this.users = users;
         }
 
-        public Users getUser() {
+        public User getUser() {
             return users;
         }
     }
 
     public static class SaveEvent extends UserFormEvent {
-        SaveEvent(UserForm source, Users users) {
+        SaveEvent(UserForm source, User users) {
             super(source, users);
         }
     }
 
     public static class DeleteEvent extends UserFormEvent {
-        DeleteEvent(UserForm source, Users users) {
+        DeleteEvent(UserForm source, User users) {
             super(source, users);
         }
     }
