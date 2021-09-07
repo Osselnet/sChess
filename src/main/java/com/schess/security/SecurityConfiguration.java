@@ -16,8 +16,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
-    UserService userService;
 
     private static final String LOGIN_PROCESSING_URL = "/login";
     private static final String LOGIN_FAILURE_URL = "/login?error";

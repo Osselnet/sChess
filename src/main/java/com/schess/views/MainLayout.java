@@ -33,7 +33,6 @@ import java.util.Optional;
         },
         enableInstallPrompt = false
 )
-
 @JsModule("./styles/shared-styles.js")
 @CssImport("./styles/views/main/main-view.css")
 public class MainLayout extends AppLayout {

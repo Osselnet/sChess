@@ -10,8 +10,7 @@ import com.schess.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinSession;
-import lombok.Data;
-import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -22,8 +21,7 @@ import java.util.List;
 @Service
 public class AuthService {
 
-    @Data
-    public class AuthorizedRoute(String route, String name, Class<? extends Component> view) {
+    public record AuthorizedRoute(String route, String name, Class<? extends Component> view) {
 
     }
 
@@ -32,11 +30,12 @@ public class AuthService {
     }
 
     private final UserRepository userRepository;
-    private final MailSender mailSender;
+    //private final MailSender mailSender;
 
-    public AuthService(UserRepository userRepository, MailSender mailSender) {
-        this.userRepository = userRepository;
-        this.mailSender = mailSender;
+//    public AuthService(UserRepository userRepository, MailSender mailSender) {
+//        this.mailSender = mailSender;
+    public AuthService(UserRepository userRepository) {
+            this.userRepository = userRepository;
     }
 
     public void authenticate(String username, String password) throws AuthException {
@@ -81,7 +80,7 @@ public class AuthService {
         message.setSubject("Confirmation email");
         message.setText(text);
         message.setTo(email);
-        mailSender.send(message);
+       // mailSender.send(message);
     }
 
     public void activate(String activationCode) throws AuthException {
