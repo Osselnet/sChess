@@ -1,24 +1,24 @@
 package com.schess.repositories;
 
-import com.schess.models.Users;
+import com.schess.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface UserRepository extends JpaRepository<Users, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     @Override
-    void delete(Users users);
+    void delete(User user);
 
     @Override
     void deleteAll();
 
     @Override
-    void deleteAll(Iterable<? extends Users> users);
+    void deleteAll(Iterable<? extends User> users);
 
     @Override
     void deleteById(Long aLong);
 
-    Users findByEmail(@Param("email") String email);
+    User findByEmail(@Param("email") String email);
 
-    Users findByName(@Param("name") String name);
+    User findByName(@Param("name") String name);
 }

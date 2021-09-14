@@ -1,43 +1,53 @@
 package com.schess.service;
 
-import com.schess.models.Users;
+import com.schess.models.Role;
+import com.schess.models.User;
+import com.schess.repositories.RoleRepository;
 import com.schess.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
-    public List<Users> findAll(String stringFilter) {
+    public List<User> findAll(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return userRepository.findAll();
         } else {
-            return (List<Users>) userRepository.findByName(stringFilter);
+            return (List<User>) userRepository.findByName(stringFilter);
         }
     }
 
-    public Users findByName(String name) {
+    public User findByName(String name) {
         return userRepository.findByName(name);
     }
 
-    public Optional<Users> findById(Long id) {
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
-    public void delete(Users users) {
-        userRepository.delete(users);
+    public void delete(User user) {
+        userRepository.delete(user);
     }
 
-    public void save(Users users) {
-        userRepository.save(users);
+    public void save(User user) {
+        user.setRoles(Collections.singleton(new Role("ROLE_USER")));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 }

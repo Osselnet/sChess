@@ -1,6 +1,6 @@
 package com.schess.view.list;
 
-import com.schess.models.Users;
+import com.schess.models.User;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -11,13 +11,10 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
 public class UserForm extends FormLayout {
-    private Users users;
+    private User user;
 
     private TextField name = new TextField("Name");
     private EmailField email = new EmailField("email");
@@ -34,8 +31,8 @@ public class UserForm extends FormLayout {
         add(name, email, actions());
     }
 
-    public void setUser(Users users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
         //binder.readBean(users);
     }
 
@@ -48,7 +45,7 @@ public class UserForm extends FormLayout {
         cancel.addClickShortcut(Key.ESCAPE);
 
         save.addClickListener(click -> validateAndSave());
-        delete.addClickListener(click -> fireEvent(new DeleteEvent(this, users)));
+        delete.addClickListener(click -> fireEvent(new DeleteEvent(this, user)));
         cancel.addClickListener(click -> fireEvent(new CloseEvent(this)));
 
         //binder.addStatusChangeListener(evt -> save.setEnabled(binder.isValid()));
@@ -59,7 +56,7 @@ public class UserForm extends FormLayout {
     private void validateAndSave() {
 //        try {
             //binder.writeBean(users);
-            fireEvent(new SaveEvent(this, users));
+            fireEvent(new SaveEvent(this, user));
 //        } catch (ValidationException e) {
 //            e.printStackTrace();
 //        }
@@ -67,27 +64,27 @@ public class UserForm extends FormLayout {
 
     // Events
     public static abstract class UserFormEvent extends ComponentEvent<UserForm> {
-        private Users users;
+        private User user;
 
-        protected UserFormEvent(UserForm source, Users users) {
+        protected UserFormEvent(UserForm source, User user) {
             super(source, false);
-            this.users = users;
+            this.user = user;
         }
 
-        public Users getUser() {
-            return users;
+        public User getUser() {
+            return user;
         }
     }
 
     public static class SaveEvent extends UserFormEvent {
-        SaveEvent(UserForm source, Users users) {
-            super(source, users);
+        SaveEvent(UserForm source, User user) {
+            super(source, user);
         }
     }
 
     public static class DeleteEvent extends UserFormEvent {
-        DeleteEvent(UserForm source, Users users) {
-            super(source, users);
+        DeleteEvent(UserForm source, User user) {
+            super(source, user);
         }
     }
 

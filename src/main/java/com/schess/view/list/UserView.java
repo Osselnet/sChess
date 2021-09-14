@@ -1,6 +1,6 @@
 package com.schess.view.list;
 
-import com.schess.models.Users;
+import com.schess.models.User;
 import com.schess.service.UserService;
 import com.schess.view.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -12,18 +12,17 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-@Route(value = "", layout = MainLayout.class)
+@Route(value = "admin", layout = MainLayout.class)
 @PageTitle("Users | SChess")
 public class UserView extends VerticalLayout {
     private final UserService userService;
 
-    private Grid<Users> grid = new Grid<>(Users.class);
+    private Grid<User> grid = new Grid<>(User.class);
 
     private final TextField filter = new TextField("", "Type to filter");
     private UserForm form;
@@ -76,7 +75,7 @@ public class UserView extends VerticalLayout {
 
     private void addUser() {
         grid.asSingleSelect().clear();
-        editUser(new Users());
+        editUser(new User());
     }
 
     private void configureGrid() {
@@ -89,7 +88,7 @@ public class UserView extends VerticalLayout {
         grid.asSingleSelect().addValueChangeListener(e -> editUser(e.getValue()));
     }
 
-    public void editUser(Users newUser) {
+    public void editUser(User newUser) {
         if (newUser == null) {
             closeEditor();
         } else {

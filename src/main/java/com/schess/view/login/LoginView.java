@@ -25,7 +25,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-
         if (beforeEnterEvent.getLocation()
         .getQueryParameters()
         .getParameters()
